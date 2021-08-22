@@ -43,7 +43,7 @@ app.post('/upload', (req, res) => {
 });
 
 app.listen(5000, () => {
-  console.log(`Example app listening at http://localhost:5000`);
+  console.log(`Brain backend server is listening at http://localhost:5000`);
 });
 
 const processPPTX = async (pptBuffer, name) => {

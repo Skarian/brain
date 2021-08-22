@@ -1,30 +1,33 @@
 # Docker Image which is used as foundation to create
 # a custom Docker Image with this Dockerfile
-FROM node:lts-alpine AS builder
- 
+FROM node:14-alpine AS builder
+
 # A directory within the virtualized Docker environment
 # Becomes more relevant when using Docker Compose later
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copies package.json and package-lock.json to Docker environment
-COPY package*.json ./
- 
-# Installs all node packages
+COPY package.json ./
+COPY package-lock.json ./
+
+# Installs all node packages and builds production 
 RUN npm install
-
-# Downloads server 
-RUN npm install -g serve
 
 # Copies everything over to Docker environment
 COPY . .
 
-# Creates production build
+# Build environment
 RUN npm run build
- 
-# Uses port which is used by the actual application
-EXPOSE 3000
 
-RUN ls -ls
+# nginx state for serving content
+FROM nginx:1.21.0-alpine
 
-# Finally runs the application
-CMD [ "npm","run", "prod" ]
+# Copy static assets from builder stage
+COPY --from=builder /app/build /usr/share/nginx/html/
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose Port
+EXPOSE 80
+
+# Containers run nginx with global directives and daemon off
+CMD ["nginx", "-g", "daemon off;"]
