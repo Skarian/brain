@@ -45,6 +45,9 @@ FROM nginx:1.21.0-alpine
 # Copy static assets from builder stage
 COPY --from=builder /app/build /usr/share/nginx/html/
 
+ARG HASURA
+ENV REACT_APP_HASURA=$HASURA
+
 # COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
 

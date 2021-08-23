@@ -3,18 +3,18 @@ services:
   frontend:
     container_name: frontend
     image: index.docker.io/nskaria/brain-frontend:latest
-    # environment:
-    #   - REACT_APP_FIREBASE_API_KEY=AIzaSyBiG-gCRYHZEDfk7nuZTqK9eSMINwoBx7Q
-    #   - REACT_APP_FIREBASE_AUTH_DOMAIN=cso-brain.firebaseapp.com
-    #   - REACT_APP_FIREBASE_DATABASE_URL=https://cso-brain-default-rtdb.firebaseio.com/
-    #   - REACT_APP_FIREBASE_PROJECT_ID=cso-brain
-    #   - REACT_APP_FIREBASE_STORAGE_BUCKET=cso-brain.appspot.com
-    #   - REACT_APP_FIREBASE_MESSAGING_SENDER_ID=951494897440
-    #   - REACT_APP_FIREBASE_APP_ID=1:951494897440:web:237fcbe94d0150be8b7145
-    #   - REACT_APP_HASURA=J2569eeva
+    environment:
+      #   - REACT_APP_FIREBASE_API_KEY=AIzaSyBiG-gCRYHZEDfk7nuZTqK9eSMINwoBx7Q
+      #   - REACT_APP_FIREBASE_AUTH_DOMAIN=cso-brain.firebaseapp.com
+      #   - REACT_APP_FIREBASE_DATABASE_URL=https://cso-brain-default-rtdb.firebaseio.com/
+      #   - REACT_APP_FIREBASE_PROJECT_ID=cso-brain
+      #   - REACT_APP_FIREBASE_STORAGE_BUCKET=cso-brain.appspot.com
+      #   - REACT_APP_FIREBASE_MESSAGING_SENDER_ID=951494897440
+      #   - REACT_APP_FIREBASE_APP_ID=1:951494897440:web:237fcbe94d0150be8b7145
+      - REACT_APP_HASURA=J2569eeva
     # build:
-    #   context: .
-    #   args:
+    # context: .
+    # args:
     #     - FIREBASE_API_KEY=AIzaSyBiG-gCRYHZEDfk7nuZTqK9eSMINwoBx7Q
     #     - FIREBASE_AUTH_DOMAIN=cso-brain.firebaseapp.com
     #     - FIREBASE_DATABASE_URL=https://cso-brain-default-rtdb.firebaseio.com/
@@ -22,7 +22,7 @@ services:
     #     - FIREBASE_STORAGE_BUCKET=cso-brain.appspot.com
     #     - FIREBASE_MESSAGING_SENDER_ID=951494897440
     #     - FIREBASE_APP_ID=1:951494897440:web:237fcbe94d0150be8b7145
-    #     - HASURA=J2569eeva
+    # - HASURA=J2569eeva
     # depends_on:
     #   - backend
     ports:
