@@ -23,6 +23,16 @@ const Unapproved = ({ user }) => {
             <p className="mt-2 text-base text-gray-500">
               Please e-mail or message Neil Skaria to be approved.
             </p>
+            {/* Delete this later */}
+            <p className="mt-2 text-base text-gray-500">
+              {`Firebase API: ${process.env.REACT_APP_FIREBASE_API_KEY}`}
+            </p>
+            <p className="mt-2 text-base text-gray-500">
+              {`Firebase Auth Domain: ${process.env.REACT_APP_AUTH_DOMAIN}`}
+            </p>
+            <p className="mt-2 text-base text-gray-500">
+              {`Hasura: ${process.env.REACT_APP_HASURA}`}
+            </p>
             <div className="mt-6">
               <a
                 href="mailto:neil.skaria@dell.com"
