@@ -1,0 +1,24 @@
+version: '3'
+services:
+  frontend:
+    container_name: frontend
+    image: index.docker.io/nskaria/brain-frontend:latest
+    build:
+      context: .
+      args:
+        - FIREBASE_API_KEY=AIzaSyBiG-gCRYHZEDfk7nuZTqK9eSMINwoBx7Q
+        - FIREBASE_AUTH_DOMAIN=cso-brain.firebaseapp.com
+        - FIREBASE_DATABASE_URL=https://cso-brain-default-rtdb.firebaseio.com/
+        - FIREBASE_PROJECT_ID=cso-brain
+        - FIREBASE_STORAGE_BUCKET=cso-brain.appspot.com
+        - FIREBASE_MESSAGING_SENDER_ID=951494897440
+        - FIREBASE_APP_ID=1:951494897440:web:237fcbe94d0150be8b7145
+        - HASURA=J2569eeva
+    depends_on:
+      - backend
+    ports:
+      - '80:80'
+
+  backend:
+    container_name: backend
+    image: index.docker.io/nskaria/brain-backend:latest
