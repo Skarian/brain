@@ -27,7 +27,8 @@ FROM nginx:1.21.0-alpine
 # Copy static assets from builder stage
 COPY --from=builder /app/build /usr/share/nginx/html/
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose Port
 EXPOSE 80
