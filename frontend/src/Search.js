@@ -12,13 +12,13 @@ const TEST = gql`
     }
   }
 `;
-
 const Search = ({ user }) => {
   const { loading, error, data } = useQuery(TEST, {
     variables: { email: user.email },
   });
-
+  console.log(`Secret Hasura = ${process.env.REACT_APP_HASURA}`);
   if (error) {
+    console.log(error);
     return <Unapproved user={user} />;
   }
   if (loading) {
