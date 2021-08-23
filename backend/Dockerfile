@@ -10,11 +10,13 @@ RUN apk add --no-cache bash libreoffice util-linux \
 
 # Copy Server Files
 WORKDIR /usr/src/app
-COPY package*.json ./
+# COPY package*.json ./
+COPY backend/package*.json ./
 
 # Setup Server
 RUN npm install
-COPY . .
+# COPY . .
+COPY backend .
 EXPOSE 5000
 RUN ls -ls
 CMD ["npm", "run", "start"]
