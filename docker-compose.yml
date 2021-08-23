@@ -6,11 +6,26 @@ services:
     environment:
       - REACT_APP_HASURA=J2569eeva
       - HASURA=J2569eeva
-    # depends_on:
-    #   - backend
+    depends_on:
+      - backend
+    # ports:
+    #   - '80:80'
+    # Run the caddy server
+  caddy:
+    image: caddy/caddy:2.2.1-alpine
+    container_name: caddy-service
+    restart: unless-stopped
     ports:
       - '80:80'
-
-  # backend:
-  #   container_name: backend
-  #   image: index.docker.io/nskaria/brain-backend:latest
+      - '443:443'
+    volumes:
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+      - $PWD/site:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+  backend:
+    container_name: backend
+    image: index.docker.io/nskaria/brain-backend:latest
+volumes:
+  caddy_data:
+  caddy_config:

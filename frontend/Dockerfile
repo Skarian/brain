@@ -49,7 +49,8 @@ COPY --from=builder /app/build /usr/share/nginx/html/
 COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose Port
-EXPOSE 80
+# EXPOSE 80
+EXPOSE 1000
 
 # Containers run nginx with global directives and daemon off
 CMD ["nginx", "-g", "daemon off;"]
