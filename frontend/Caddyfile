@@ -1,0 +1,18 @@
+# Replace example.com with your application's domain
+# * {
+#   # node-app:4000 is the docker container running the Node.js application
+#   # in our case it's exposed on port 4000
+#   reverse_proxy frontend:1000  {
+#     header_down Strict-Transport-Security max-age=31536000;
+#    }
+# }
+
+0.0.0.0:1000 {
+	gzip
+	log / stdout "{method} {path} {status}"
+	root /usr/share/caddy/html
+	rewrite {
+		regexp .*
+		to {path} /
+	}
+}

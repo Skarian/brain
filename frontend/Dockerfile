@@ -39,21 +39,26 @@ ENV REACT_APP_HASURA=$HASURA
 # Build environment
 RUN npm run build
 
-# nginx state for serving content
-FROM nginx:1.21.0-alpine
+# # nginx state for serving content
+# FROM nginx:1.21.0-alpine
 
-# Copy static assets from builder stage
-COPY --from=builder /app/build /usr/share/nginx/html/
+# # Copy static assets from builder stage
+# COPY --from=builder /app/build /usr/share/nginx/html/
 
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
+# # COPY nginx.conf /etc/nginx/conf.d/default.conf
+# COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose Port
-# EXPOSE 80
+# # Expose Port
+# # EXPOSE 80
 EXPOSE 1000
 
-# Containers run nginx with global directives and daemon off
-CMD ["nginx", "-g", "daemon off;"]
+# # Containers run nginx with global directives and daemon off
+# CMD ["nginx", "-g", "daemon off;"]
+
+FROM abiosoft/caddy:1.0.3
+
+COPY frontend/Caddyfile /etc/Caddyfile
+COPY --from=builder /app/build /usr/share/caddy/html
 
         
         
