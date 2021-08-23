@@ -6,14 +6,17 @@ FROM node:14-alpine AS builder
 # Becomes more relevant when using Docker Compose later
 WORKDIR /app
 
-COPY package.json ./
-COPY package-lock.json ./
+# COPY package.json ./
+COPY frontend/package.json ./
+# COPY package-lock.json ./
+COPY frontend/package-lock.json ./
 
 # Installs all node packages and builds production 
 RUN npm install
 
 # Copies everything over to Docker environment
-COPY . .
+# COPY . .
+COPY frontend .
 
 # Build environment
 RUN npm run build
