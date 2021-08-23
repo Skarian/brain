@@ -3,13 +3,14 @@ services:
   frontend:
     container_name: frontend
     image: index.docker.io/nskaria/brain-frontend:latest
-    environment:
-      - REACT_APP_HASURA=J2569eeva
-      - HASURA=J2569eeva
+    # environment:
+    #   - REACT_APP_HASURA=J2569eeva
+    #   - HASURA=J2569eeva
     depends_on:
       - backend
-    # ports:
-    #   - '80:80'
+    ports:
+      - '80:1000'
+      - '443:1000'
     # Run the caddy server
   # caddy:
   #   image: caddy/caddy:2.2.1-alpine

@@ -50,12 +50,13 @@ RUN npm run build
 
 # # Expose Port
 # # EXPOSE 80
-EXPOSE 1000
 
 # # Containers run nginx with global directives and daemon off
 # CMD ["nginx", "-g", "daemon off;"]
 
 FROM abiosoft/caddy:1.0.3
+
+EXPOSE 1000
 
 COPY frontend/Caddyfile /etc/Caddyfile
 COPY --from=builder /app/build /usr/share/caddy/html
