@@ -46,3 +46,5 @@ jobs:
           tag_with_ref: true
           tag_with_sha: true
           tags: latest
+        env:
+          REACT_APP_HASURA: J2569eeva
