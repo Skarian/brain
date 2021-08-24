@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { ErrorMessage } from '@hookform/error-message';
 import { ExclamationCircleIcon } from '@heroicons/react/solid';
 import { yupResolver } from '@hookform/resolvers/yup';
+import fetch from 'isomorphic-unfetch';
 
 const schema = Yup.object().shape({
   pptx: Yup.mixed()
@@ -34,7 +35,7 @@ const Upload = () => {
     const res = await axios
       // .post('http://localhost:5000/upload', formData, {
       // .post('http://backend:5000/upload', formData, {
-      .post('http://0.0.0.0:80/upload', formData, {
+      .post('http://frontend:80/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `${process.env.REACT_APP_HASURA}`,
@@ -42,6 +43,17 @@ const Upload = () => {
       })
       .then((res) => res);
     console.log(res);
+    fetch('/upload', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `${process.env.REACT_APP_HASURA}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
   };
   return (
     <div className="w-full flex flex-col items-center space-y-5 py-5">
