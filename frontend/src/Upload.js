@@ -32,17 +32,17 @@ const Upload = () => {
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append('pptx', data.pptx[0]);
-    const res = await axios
-      // .post('http://localhost:5000/upload', formData, {
-      // .post('http://backend:5000/upload', formData, {
-      .post('http://frontend:80/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `${process.env.REACT_APP_HASURA}`,
-        },
-      })
-      .then((res) => res);
-    console.log(res);
+    // const res = await axios
+    //   // .post('http://localhost:5000/upload', formData, {
+    //   // .post('http://backend:5000/upload', formData, {
+    //   .post('http://frontend:80/upload', formData, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //       Authorization: `${process.env.REACT_APP_HASURA}`,
+    //     },
+    //   })
+    //   .then((res) => res);
+    // console.log(res);
     fetch('/upload', {
       method: 'POST',
       body: JSON.stringify(formData),
