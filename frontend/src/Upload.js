@@ -33,7 +33,8 @@ const Upload = () => {
     formData.append('pptx', data.pptx[0]);
     const res = await axios
       // .post('http://localhost:5000/upload', formData, {
-      .post('http://backend:5000/upload', formData, {
+      // .post('http://backend:5000/upload', formData, {
+      .post('http://0.0.0.0/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `${process.env.REACT_APP_HASURA}`,
