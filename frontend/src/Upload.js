@@ -45,9 +45,9 @@ const Upload = () => {
     // console.log(res);
     fetch('/upload', {
       method: 'POST',
-      body: JSON.stringify(formData),
+      body: formData,
       headers: {
-        'Content-Type': 'multipart/form-data',
+        // 'Content-Type': 'multipart/form-data',
         Authorization: `${process.env.REACT_APP_HASURA}`,
       },
     })
