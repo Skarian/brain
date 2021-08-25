@@ -1,8 +1,9 @@
 import { Helmet } from 'react-helmet';
-import Dashboard from './Dashboard';
 import UserProvider from './context/userContext';
 import { Toaster } from 'react-hot-toast';
 import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { PrivateRoute } from './pages/PrivateRoute';
 
 // const createApolloClient = (authToken) => {
 const createApolloClient = () => {
@@ -30,7 +31,12 @@ function App() {
       <ApolloProvider client={client}>
         <UserProvider>
           <Toaster position="bottom-center" reverseOrder={false} />
-          <Dashboard />
+          <BrowserRouter>
+            <Switch>
+              <PrivateRoute to="/dashboard" />
+              <Route path="/" render={() => <div>Oops you broke something...404 error</div>} />
+            </Switch>
+          </BrowserRouter>
         </UserProvider>
       </ApolloProvider>
     </div>
@@ -38,3 +44,13 @@ function App() {
 }
 
 export default App;
+
+// Make a Link in React Router
+
+// import Link from "react-router-doom"
+
+// <Link to="/about">About Page</Link>
+
+// Push Router, extract {history} from props
+
+// history.push('/about')

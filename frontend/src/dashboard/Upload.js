@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { UploadIcon } from '@heroicons/react/outline';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { ErrorMessage } from '@hookform/error-message';
@@ -32,22 +30,10 @@ const Upload = () => {
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append('pptx', data.pptx[0]);
-    // const res = await axios
-    //   // .post('http://localhost:5000/upload', formData, {
-    //   // .post('http://backend:5000/upload', formData, {
-    //   .post('http://frontend:80/upload', formData, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //       Authorization: `${process.env.REACT_APP_HASURA}`,
-    //     },
-    //   })
-    //   .then((res) => res);
-    // console.log(res);
-    fetch('/upload', {
+    fetch(process.env.NODE_ENV === 'development' ? 'http://localhost:5000/upload' : '/upload', {
       method: 'POST',
       body: formData,
       headers: {
-        // 'Content-Type': 'multipart/form-data',
         Authorization: `${process.env.REACT_APP_HASURA}`,
       },
     })

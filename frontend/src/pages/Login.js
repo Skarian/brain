@@ -8,6 +8,17 @@ import { ExclamationCircleIcon } from '@heroicons/react/solid';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import toast from 'react-hot-toast';
+import { gql, useMutation } from '@apollo/client';
+
+const ADD_USER = gql`
+  mutation addUser($text: String!) {
+    insert_users_one(object: { user_email: $text, isKM: false, isApproved: false }) {
+      user_email
+      isKM
+      isApproved
+    }
+  }
+`;
 
 const Login = () => {
   const [isSignup, setIsSignUp] = useState(false);
@@ -37,12 +48,18 @@ const Login = () => {
       });
   };
 
+  // const [addUser, { apolloData, loading, error }] = useMutation(ADD_USER);
+  const [addUser] = useMutation(ADD_USER);
+
   const onSignup = (data) =>
     firebase
       .auth()
       .createUserWithEmailAndPassword(data.email, data.password)
       .then(() => {
         toast.success('Account created! Please contact Neil Skaria to be approved for access!');
+      })
+      .then(() => {
+        addUser({ variables: { text: data.email } });
       })
       .catch((error) => {
         toast.error(error.message);

@@ -1,6 +1,20 @@
 import React from 'react';
+import firebase from '../firebase/client';
+import toast from 'react-hot-toast';
 
 const Unapproved = ({ user }) => {
+  const signOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        toast.success('Successfully signed out!');
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+
   return (
     <div className="min-h-screen pt-16 pb-12 flex flex-col bg-white">
       <main className="flex-grow flex flex-col justify-center max-w-2xl w-full mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,7 +37,7 @@ const Unapproved = ({ user }) => {
             <p className="mt-2 text-base text-gray-500">
               Please e-mail or message Neil Skaria to be approved.
             </p>
-            <div className="mt-6">
+            <div className="mt-6 mb-6">
               <a
                 href="mailto:neil.skaria@dell.com"
                 className="text-base font-medium text-blue-600 hover:text-blue-500"
@@ -31,6 +45,12 @@ const Unapproved = ({ user }) => {
                 E-mail Neil<span aria-hidden="true"> &rarr;</span>
               </a>
             </div>
+            <button
+              className="bg-red-600 hover:bg-red-700 flex-shrink-0 rounded-lg p-2 text-red-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-600 focus:ring-white"
+              onClick={signOut}
+            >
+              Sign out
+            </button>
           </div>
         </div>
       </main>

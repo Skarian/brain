@@ -3,11 +3,11 @@ import { Fragment } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { SearchIcon } from '@heroicons/react/solid';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
-import firebase from './firebase/client';
+import firebase from '../firebase/client';
 import toast from 'react-hot-toast';
-import Content from './Content';
+import Upload from './Upload';
 
-const Approved = ({ isKM }) => {
+const Dashboard = ({ isKM }) => {
   const navigation = isKM ? ['Search', 'Projects', 'KM'] : ['Search', 'Projects'];
   const [currentPage, setCurrentPage] = useState('Search');
   const signOut = () => {
@@ -162,7 +162,9 @@ const Approved = ({ isKM }) => {
           {/* Replace with your content */}
           <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
             <div className="h-96 border-4 border-dashed border-gray-200 rounded-lg">
-              <Content page={currentPage} />
+              {currentPage === 'Search' ? <div>Search</div> : null}
+              {currentPage === 'Projects' ? <div>Projects</div> : null}
+              {currentPage === 'KM' ? <Upload /> : null}
             </div>
           </div>
           {/* /End replace */}
@@ -172,4 +174,4 @@ const Approved = ({ isKM }) => {
   );
 };
 
-export default Approved;
+export default Dashboard;
