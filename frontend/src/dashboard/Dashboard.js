@@ -6,6 +6,7 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import firebase from '../firebase/client';
 import toast from 'react-hot-toast';
 import Upload from './Upload';
+import UploadNEW from './UploadNEW';
 
 const Dashboard = ({ isKM }) => {
   const navigation = isKM ? ['Search', 'Projects', 'KM'] : ['Search', 'Projects'];
@@ -164,7 +165,8 @@ const Dashboard = ({ isKM }) => {
             <div className="h-96 border-4 border-dashed border-gray-200 rounded-lg">
               {currentPage === 'Search' ? <div>Search</div> : null}
               {currentPage === 'Projects' ? <div>Projects</div> : null}
-              {currentPage === 'KM' ? <Upload /> : null}
+              {/* {currentPage === 'KM' ? <Upload /> : null} */}
+              {currentPage === 'KM' ? <UploadNEW /> : null}
             </div>
           </div>
           {/* /End replace */}

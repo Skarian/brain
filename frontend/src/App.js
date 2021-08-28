@@ -4,12 +4,16 @@ import { Toaster } from 'react-hot-toast';
 import { ApolloClient, ApolloProvider, InMemoryCache, HttpLink } from '@apollo/client';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './pages/PrivateRoute';
+import { StateMachineProvider, createStore } from 'little-state-machine';
 
-// const createApolloClient = (authToken) => {
+createStore({
+  upload: [],
+});
+
 const createApolloClient = () => {
   return new ApolloClient({
     link: new HttpLink({
-      uri: 'http://147.182.136.107/v1/graphql',
+      uri: process.env.NODE_ENV === 'development' ? 'http://localhost:8080/v1/graphql' : '/hasura',
       headers: {
         'X-Hasura-Admin-Secret': `${process.env.REACT_APP_HASURA}`,
       },
@@ -28,17 +32,19 @@ function App() {
         <meta name="description" content="A central repository of information" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
       </Helmet>
-      <ApolloProvider client={client}>
-        <UserProvider>
-          <Toaster position="bottom-center" reverseOrder={false} />
-          <BrowserRouter>
-            <Switch>
-              <PrivateRoute to="/dashboard" />
-              <Route path="/" render={() => <div>Oops you broke something...404 error</div>} />
-            </Switch>
-          </BrowserRouter>
-        </UserProvider>
-      </ApolloProvider>
+      <StateMachineProvider>
+        <ApolloProvider client={client}>
+          <UserProvider>
+            <Toaster position="bottom-center" reverseOrder={false} />
+            <BrowserRouter>
+              <Switch>
+                <PrivateRoute to="/dashboard" />
+                <Route path="/" render={() => <div>Oops you broke something...404 error</div>} />
+              </Switch>
+            </BrowserRouter>
+          </UserProvider>
+        </ApolloProvider>
+      </StateMachineProvider>
     </div>
   );
 }
