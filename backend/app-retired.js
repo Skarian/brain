@@ -16,25 +16,30 @@ app.use(fileupload());
 app.use(express.static('files'));
 
 app.post('/upload', (req, res) => {
-  console.log(req.files.pptx);
-  console.log(req.body.category);
-  console.log(req.body.contact);
-  console.log(req.body.description);
-  console.log(req.body.project_id);
-
-  if (req.files.pptx) {
-    processPPTX(req.files.pptx.data)
-      .then((data) => {
-        console.log(data);
-        res.send({
-          status: 200,
-          message: 'File is uploaded and processed',
+  try {
+    if (!req.files) {
+      res.send({
+        status: false,
+        message: 'No Files',
+      });
+    } else {
+      processPPTX(req.files.pptx.data, 'bigboy')
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
         });
-      })
-      .catch((err) => res.send({ status: 300, message: 'Processing failed' }));
-  } else {
-    res.status(400).send({ message: 'No powerpoint file found', status: 400 });
+      res.send({
+        status: true,
+        message: 'File is uploaded',
+      });
+    }
+  } catch (e) {
+    res.status(500).send(e);
   }
+
+  console.log(req.files.pptx.data);
 });
 
 app.listen(5000, () => {

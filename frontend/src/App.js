@@ -6,9 +6,14 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { PrivateRoute } from './pages/PrivateRoute';
 import { StateMachineProvider, createStore } from 'little-state-machine';
 
-createStore({
-  upload: [],
-});
+createStore(
+  {
+    upload: [],
+  }
+  // {
+  //   storageType: sessionStorage,
+  // }
+);
 
 const createApolloClient = () => {
   return new ApolloClient({
@@ -22,7 +27,6 @@ const createApolloClient = () => {
   });
 };
 function App() {
-  // const client = createApolloClient(idToken)
   const client = createApolloClient();
   return (
     <div>

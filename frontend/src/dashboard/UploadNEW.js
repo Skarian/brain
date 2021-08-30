@@ -114,28 +114,52 @@
 
 // export default UploadNEW;
 
-import React from 'react';
+import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import FileInput from './components/fileinput';
 
 const UploadNEW = () => {
-  const methods = useForm({
-    mode: 'onBlur',
-  });
-  const onSubmit = methods.handleSubmit((values) => {
-    console.log('values', values);
-  });
+  const [files, setFiles] = useState([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const methods = useForm();
+  const { handleSubmit } = methods;
+
+  const onSubmit = async (data) => {
+    toast.success('Beginning upload now...');
+    setIsUploading(true);
+    console.log('FORM DATA:');
+    console.log(data);
+    console.log('FILE DATA');
+    console.log(files);
+    files.forEach((file, index) => {
+      const formData = new FormData();
+      formData.append('pptx', file);
+      formData.append('category', data[index].category);
+      formData.append('contact', data[index].contact);
+      formData.append('description', data[index].description);
+      formData.append('project_id', data[index].project);
+      fetch(process.env.NODE_ENV === 'development' ? 'http://localhost:5000/upload' : '/upload', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err));
+    });
+  };
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={onSubmit} className="w-full h-full">
-        <FileInput
-          accept="image/png, image/jpg, image/jpeg, image/gif"
-          name="file alt text"
-          label="File Upload"
-        />
-      </form>
-    </FormProvider>
+    <div>
+      {isUploading ? (
+        <div>Uploading...</div>
+      ) : (
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full h-full">
+            <FileInput draggedFiles={files} setDraggedFiles={setFiles} />
+          </form>
+        </FormProvider>
+      )}
+    </div>
   );
 };
 
